@@ -85,6 +85,22 @@ public class UserController {
         return Result.ok(info);
     }
 
+
+    @GetMapping("/sign/count")
+    public Result signCount(){
+        return userService.signCount();
+    }
+
+    @PostMapping("/sign")
+    public Result sign(){
+        return userService.sign();
+    }
+
+    @GetMapping("/sign")
+    public Result handleInvalidSignRequest() {
+        return Result.fail("请使用 POST 方法访问签到接口");
+    }
+
     @GetMapping("/{id}")
     public Result queryUserById(@PathVariable("id") Long userId){
         // 查询详情
@@ -95,10 +111,5 @@ public class UserController {
         UserDTO userDTO = BeanUtil.copyProperties(user, UserDTO.class);
         // 返回
         return Result.ok(userDTO);
-    }
-
-    @PostMapping("/sign")
-    public Result sign(){
-        return userService.sign();
     }
 }
